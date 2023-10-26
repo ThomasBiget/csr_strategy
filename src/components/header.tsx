@@ -23,12 +23,12 @@ export default function header() {
                     border-gray-700
                     border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
                     active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-gray-400 shadow-gray-400 active:shadow-none">Se connecter</button>
-                <button className="cursor-pointer transition-all 
+                <Link href="/register"><button className="cursor-pointer transition-all 
                     bg-gray-700 text-white px-6 py-2 rounded-lg
                     border-green-400
                     border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
                     active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-green-300 shadow-green-300 active:shadow-none">Créer un compte
-                </button>
+                </button></Link>
             </div>
         </header>
     )

@@ -1,0 +1,125 @@
+{
+      "Environnement": {
+        "ESRS": {
+          "E1 Changement climatique": {
+            "DR": {
+              "E1-1": "Plan de transition pour l'atténuation du changement climatique",
+              "E1-2": "Politiques relatives à l'atténuation et à l'adaptation au changement climatique",
+              "E1-3": "Actions et ressources liées aux politiques mises en place en lien avec le changement climatique",
+              "E1-4": "Objectifs liés à l'atténuation et à l'adaptation au changement climatique",
+              "E1-5": "Consommation d&apos;énergie et mix énergétique",
+              "E1-6": "Émissions brutes de GES des scopes 1, 2, 3 et total des GES",
+              "E1-7": "Les absorptions de GES et les projets d'atténuation des GES financés grâce aux crédits carbone",
+              "E1-8": "Tarification interne du carbone",
+              "E1-9": "Effets financiers anticipés des risques physiques et de transition et des opportunités potentielles liées au climat"
+            }
+          },
+          "E2 Pollution": {
+            "DR": {
+              "E2-1": "Politiques relatives à la pollution",
+              "E2-2": "Actions et ressources liées à la pollution",
+              "E2-3": "Objectifs liés à la pollution",
+              "E2-4": "Pollution de l'air, de l'eau et du sol",
+              "E2-5": "Substances préoccupantes et substances très préoccupantes",
+              "E2-6": "Effets financiers prévus des impacts, risques et opportunités liés à la pollution"
+            }
+          },
+          "E3 Ressources marines et en eau": {
+            "DR": {
+              "E3-1": "Politiques relatives à l'eau et aux ressources marines",
+              "E3-2": "Actions et ressources liées à l'eau et aux ressources marines",
+              "E3-3": "Objectifs relatifs à l'eau et aux ressources marines",
+              "E3-4": "Consommation d'eau",
+              "E3-5": "Effets financiers prévus des impacts, risques et opportunités liés à l'eau et aux ressources marines"
+            }
+          },
+          "E4 Biodiversité et écosystèmes": {
+            "DR": {
+              "E4-1": "Plan de transition et prise en compte de la biodiversité et des écosystèmes dans la stratégie et le business model",
+              "E4-2": "Politiques relatives à la biodiversité et aux écosystèmes",
+              "E4-3": "Actions et ressources liées à la biodiversité et aux écosystèmes",
+              "E4-4": "Objectifs relatifs à la biodiversité et aux écosystèmes",
+              "E4-5": "Mesures d'impact relatives à la biodiversité et aux écosystèmes",
+              "E4-6": "Effets financiers anticipés des risques et opportunités liés à la biodiversité et aux écosystèmes"
+            }
+          },
+          "E5 Utilisation des ressources et économie circulaire": {
+            "DR": {
+              "E5-1": "Politiques relatives à l'utilisation des ressources et à l'économie circulaire",
+              "E5-2": "Actions et ressources liées à l'utilisation des ressources et à l'économie circulaire",
+              "E5-3": "Objectifs liés à l'utilisation des ressources et à l'économie circulaire",
+              "E5-4": "Entrées de ressources",
+              "E5-5": "Sorties de ressources",
+              "E5-6": "Effets financiers attendus de l'utilisation des ressources et impacts, risques et opportunités liés à l'économie circulaire"
+            }
+          }
+        }
+      },
+      "Social": {
+        "ESRS": {
+          "S1 Main d&apos;oeuvre de l&apos;entreprise": {
+            "DR": {
+              "S1-1": "Politiques relatives à la main-d'œuvre de l&apos;entreprise",
+              "S1-2": "Processus d'engagement avec les travailleurs et les représentants des travailleurs au sujet des impacts",
+              "S1-3": "Processus pour remédier aux impacts négatifs et et canaux permettant aux travailleurs de l'entreprise de faire part de leurs préoccupations",
+              "S1-4": "Prendre des mesures en cas d'impacts matériels sur ses propres effectifs, approches visant à atténuer les risques importants et à saisir les opportunités matérielles liées à son propre personnel, ainsi que l'efficacité de ces actions.",
+              "S1-5": "Objectifs liés à la gestion des impacts négatifs importants, à l'amélioration des impacts positifs et à la gestion des risques et des opportunités",
+              "S1-6": "Caractéristiques des salariés de l'entreprise",
+              "S1-7": "Caractéristiques des travailleurs non-salariés de l'entreprise",
+              "S1-8": "Couverture des négociations collectives et dialogue social",
+              "S1-9": "Mesure de la diversité",
+              "S1-10": "Salaires adéquats",
+              "S1-11": "Protection sociale",
+              "S1-12": "Personnes handicapées",
+              "S1-13": "Mesures relatives à la formation et au développement des compétences",
+              "S1-14": "Indicateurs de santé et de sécurité",
+              "S1-15": "Mesures relatives à l'équilibre entre vie professionnelle et vie privée",
+              "S1-16": "Paramètres de rémunération (écart de rémunération et rémunération totale)",
+              "S1-17": "Incidents, plaintes et impacts graves sur les droits de l'homme"
+            }
+          },
+          "S2 Employés de la chaîne de valeur": {
+            "DR": {
+              "S2-1": "Politiques relatives aux travailleurs de la chaîne de valeur",
+              "S2-2": "Processus d'engagement avec les travailleurs de la chaîne de valeur au sujet des impacts",
+              "S2-3": "Processus pour remédier aux impacts négatifs et canaux permettant aux travailleurs de la chaîne de valeur de faire part de leurs préoccupations",
+              "S2-4": "Mesures à prendre en cas d'impacts matériels sur les travailleurs de la chaîne de valeur sur les travailleurs de la chaîne de valeur, et approches pour gérer les risques matériels et saisir des opportunités matérielles liées aux travailleurs de la chaîne de valeur, ainsi que l'efficacité de ces actions",
+              "S2-5": "Objectifs liés à la gestion des impacts négatifs, à l'amélioration des impacts positifs et à la gestion des risques et des opportunités"
+            }
+          },
+          "S3 Communautés concernées": {
+            "DR": {
+              "S3-1": "Politiques relatives aux communautés affectées",
+              "S3-2": "Processus d'engagement avec les communautés affectées au sujet des impacts",
+              "S3-3": "Processus pour remédier aux impacts négatifs et canaux permettant aux communautés affectées de faire part de leurs préoccupations",
+              "S3-4": "Mesures à prendre en cas d'impacts matériels sur les communautés affectées, approches de la gestion des risques importants et de la recherche d'opportunités importantes liées aux communautés affectées, et efficacité des mesures prises",
+              "S3-5": "Objectifs liés à la gestion des impacts négatifs importants, à l'amélioration des impacts positifs et à la gestion des risques et des opportunités"
+            }
+          },
+          "S4 Consommateurs et utilisations": {
+            "DR": {
+              "S4-1": "Politiques relatives aux consommateurs et aux utilisateurs finaux",
+              "S4-2": "Processus d'engagement avec les consommateurs et les utilisateurs finaux concernant les impacts",
+              "S4-3": "Processus pour remédier aux impacts négatifs et les canaux permettant aux consommateurs et aux utilisateurs finaux de faire part de leurs préoccupations",
+              "S4-4": "Mesures à prendre en cas d'impacts matériels sur les consommateurs et utilisateurs finaux, et approches de la gestion des risques matériels et de la recherche d'opportunités matérielles liées aux consommateurs et aux utilisateurs finaux, ainsi que l'efficacité de ces actions",
+              "S4-5": "Objectifs liés à la gestion des impacts négatifs importants, à l'amélioration des impacts positifs et à la gestion des risques et opportunités"
+            }
+          }
+        }
+      },
+      "Gouvernance": {
+        "ESRS": {
+            "G1 Conduite commerciale": {
+                "DR": {
+                  "G1-1": "Culture d'entreprise et politiques de conduite des affaires et de culture d'entreprise",
+                  "G1-2": "Gestion des relations avec les fournisseurs",
+                  "G1-3": "Prévention et détection de la corruption et des pots-de-vin",
+                  "G1-4": "Incidents confirmés de corruption ou de pots-de-vin",
+                  "G1-5": "Influence politique et activités de lobbying",
+                  "G1-6": "Pratiques de paiement"
+                }
+            }
+        }
+      }
+  }
+  

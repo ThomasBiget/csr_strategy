@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../lib/client';
+import prisma from '../../../lib/client';
 
 export default async function findUsers(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {

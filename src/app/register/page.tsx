@@ -66,21 +66,17 @@ function Register() {
     }
     // on envoie un post vers l'API
     console.log(data);
-      const response = await fetch('/api/createUser')
-      console.log(response);      
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(data),
-      // });
-  
-      // const newUser = await response.json();
-      // console.log(newUser);
+    console.log(JSON.stringify(data))
+      const response = await fetch('/api/user/createUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-  
-
-  
+      const newUser = await response.json();
+      console.log(newUser);
   };
 
 

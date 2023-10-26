@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../lib/client';
+import prisma from '../../../lib/client';
 
-export default async function createUser(req: NextApiRequest, res: NextApiResponse) {
+async function createUser(req: NextApiRequest, res: NextApiResponse) {
   const { name, email, password, entreprise } = req.body;
   
   if (req.method === 'POST') {
@@ -22,3 +22,5 @@ export default async function createUser(req: NextApiRequest, res: NextApiRespon
     res.status(405).end(); // Méthode non autorisée
   }
 };
+
+export default createUser;

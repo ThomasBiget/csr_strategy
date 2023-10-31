@@ -66,7 +66,6 @@ function Register() {
     }
     // on envoie un post vers l'API
     console.log(data);
-    console.log(JSON.stringify(data))
       const response = await fetch('/api/user/createUser', {
         method: 'POST',
         headers: {

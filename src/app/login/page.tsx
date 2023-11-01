@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff } from 'lucide-react';
-import Header from '../../components/header'
-import Footer from '../../components/footer'
 import { signIn } from 'next-auth/react';
 
 // typage des éléments envoyés en post à l'API
@@ -50,7 +48,8 @@ function Login() {
     if (signInData?.error) {
       console.log(signInData.error);
     } else {
-      router.push('/dashboard');
+      router.refresh();
+      router.push('/connexion');
     }
     console.log(signInData);
   };
@@ -58,7 +57,6 @@ function Login() {
 
   return (
   <div>
-  <Header />
         <div className="flex flex-col items-center justify-between mb-48 mt-6">
           <h1 className="text-2xl font-bold lg:pt-0 text-center my-4 text-green-400">Se connecter</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
@@ -98,7 +96,6 @@ function Login() {
             </div>
           </form>
         </div>
-        <Footer />
         </div>
   );
 }

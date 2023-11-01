@@ -1,21 +1,23 @@
-"use client"
-import Header from '../../components/header'
-import Footer from '../../components/footer'
 import Link  from 'next/link'
-import { signOut } from 'next-auth/react'
 import { getAuthSession } from '@/lib/nextauth'
 
 
 export default async function Dashboard() {
 const session = await getAuthSession();
-console.log(session)
+
+if (!session?.user) {
   return (
     <div>
-    <Header />
-    <div>Hello {session?.user?.name}</div>
-    <button onClick={() => signOut()}>Sign out</button>
-    <Link href='/dashboard/enjeux'>Voir les enjeux</Link>
-    <Footer />
+    <div>Vous n&apos;êtes pas connecté</div>
+    <Link href='/login'>Se connecter</Link>
     </div>
   )
+}
+else {
+  return (    
+    <div><div>Hello {session?.user?.name}</div>
+    <Link href='/dashboard/enjeux'>Voir les enjeux</Link>
+    </div>
+   )
+}
 }

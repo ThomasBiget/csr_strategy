@@ -81,7 +81,6 @@ function Register() {
 
   return (
   <div>
-  <Header />
         <div className="flex flex-col items-center justify-between mb-3 mt-6">
           <h1 className="text-2xl font-bold lg:pt-0 text-center my-4 text-green-400">S&apos;inscrire</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
@@ -161,7 +160,6 @@ function Register() {
             </div>
           </form>
         </div>
-        <Footer />
         </div>
   );
 }

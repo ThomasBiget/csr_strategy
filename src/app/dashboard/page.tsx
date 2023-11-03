@@ -5,6 +5,9 @@ import { getAuthSession } from '@/lib/nextauth'
 export default async function Dashboard() {
 const session = await getAuthSession();
 
+console.log(session);
+console.log(session?.user);
+
 if (!session?.user) {
   return (
     <div>

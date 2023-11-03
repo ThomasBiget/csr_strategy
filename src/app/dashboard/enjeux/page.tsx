@@ -1,8 +1,14 @@
-import { Trash2, PenSquare } from 'lucide-react'
+import { Trash2, PenSquare, Plus } from 'lucide-react'
+import Link from 'next/link'
+
 
 export default function Enjeux() {
   return (
     <div>
+    <div className='flex justify-end mr-6 mb-4'>
+        <Link href={'/dashboard/enjeux/add_enjeu'}><button className='bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold py-2 px-4 inline-flex items-center rounded-full gap-1'><Plus size={16} /><span>Ajouter un enjeu</span></button></Link>
+    </div>
+    <div className='divide-y divide-solid'></div>
     <div className="relative overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

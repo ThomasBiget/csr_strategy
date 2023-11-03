@@ -17,6 +17,7 @@ model User {
   password  String
   entreprise String?
   projects  Projet[]
+  enjeux    Enjeu[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -27,9 +28,10 @@ model Enjeu {
   color     String
   pilier    String
   esrs      String
-  description String
   business_impact Int
   soc_en_impact Int
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

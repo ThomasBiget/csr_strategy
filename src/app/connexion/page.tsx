@@ -2,6 +2,8 @@
 import { useRouter } from 'next/navigation';
 
 export default function Connexion() {
+
+
     const router = useRouter()
     setTimeout(() => {
         router.push('/dashboard');

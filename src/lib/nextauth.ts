@@ -33,6 +33,7 @@ export const authOptions: NextAuthOptions = {
             const passwordValid = await compare(credentials?.password || '', user.password);
 
             if (passwordValid) {
+              
               return {
                 id: user.id.toString(),
                 email: user.email,
@@ -44,25 +45,23 @@ export const authOptions: NextAuthOptions = {
         })
       ],
       callbacks: {
+        async jwt({ token, user}) {
+          if (user) {
+            token.id = user.id
+            token.name = user.name
+          }
+          return token
+        },
         async session({ session, token }) {
           return {
             ...session,
             user: {
             ...session.user,
             username: token.name,
+            id: token.id,
             }
           }
         },
-        async jwt({ token, user}) {
-          console.log('user', user)
-          if (user) {
-            return {
-            ...token,
-            username: user.name,
-          }
-          }
-          return token
-        }
       },
 };
 

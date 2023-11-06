@@ -2,8 +2,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
-import Header from '../../components/header'
-import Footer from '../../components/footer'
+
 
 // typage des éléments envoyés en post à l'API
 interface InputProps {

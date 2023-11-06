@@ -1,14 +1,21 @@
 import Link  from 'next/link'
 import { getAuthSession } from '@/lib/nextauth'
 
-
+interface UserProps {
+  user?: {
+    id?: string;
+    name?: string;
+    email?: string;
+    image?: string;
+  };
+}
 export default async function Dashboard() {
-const session = await getAuthSession();
+  
+const sessionResult = await getAuthSession();
 
-console.log(session);
-console.log(session?.user);
+console.log(sessionResult);
 
-if (!session?.user) {
+if (!sessionResult?.user) {
   return (
     <div>
     <div>Vous n&apos;êtes pas connecté</div>
@@ -17,9 +24,11 @@ if (!session?.user) {
   )
 }
 else {
+  const session: UserProps = sessionResult as UserProps;
   return (    
     <div>
       <div>Hello {session?.user?.name}</div>
+      <div>Vous êtes connecté avec id : {session?.user?.id}</div>
       <div>
       <header>
         <nav>

@@ -16,11 +16,12 @@ CREATE TABLE "Enjeu" (
     "color" TEXT NOT NULL,
     "pilier" TEXT NOT NULL,
     "esrs" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
     "business_impact" INTEGER NOT NULL,
     "soc_en_impact" INTEGER NOT NULL,
+    "authorId" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Enjeu_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable

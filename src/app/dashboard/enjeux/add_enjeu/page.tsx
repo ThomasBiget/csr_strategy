@@ -1,42 +1,57 @@
 "use client"
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import enjeux_data from '../../../../../data/esrs.json';
+import { useSession } from "next-auth/react"
 
 
 // typage des éléments envoyés en post à l'API
 interface InputProps {
-  label: string,
-  color: string,
   pilier: string,
   esrs: string,
-  business_impact: number,
-  soc_en_impact: number,
+  label: string,
+  business_impact: string,
+  soc_en_impact: string,
 }
+const enjeux_data = require('../../../../../data/esrs.json');
+
+const noteArray = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1"];
 
 export default function AddEnjeu() {
 
-
+const { data: session } = useSession()
 const piliers = Object.keys(enjeux_data);
-const esrsEnvironnement = Object.keys(enjeux_data.Environnement);
-let esrsList = []
-let enjeuxList = []
+const esrsEnv = Object.keys(enjeux_data[piliers[0]]);
 
-const [selectedPilier, setSelectedPilier] = useState(piliers[0]);
-const [esrs, setEsrs] = useState([]);
-const [selectedEsrs, setSelectedEsrs] = useState(esrsEnvironnement[0]);
-const [enjeux, setEnjeux] = useState([]);
-
+const [selectedPilier, setSelectedPilier] = useState<string>(piliers[0]);
+const [esrs, setEsrs] = useState<string[]>([]);
+const [selectedEsrs, setSelectedEsrs] = useState<string>(esrsEnv[0]);
+const [enjeux, setEnjeux] = useState<string[]>([]);
 
 useEffect(() => {
-    esrsList = Object.keys(enjeux_data[selectedPilier])
+  const esrsList = Object.keys(enjeux_data[selectedPilier]);
     setEsrs(esrsList);
-}, [selectedPilier]);
+    setSelectedEsrs(esrsList[0]);
+}, [selectedPilier, selectedEsrs]);
 
 useEffect(() => {
-    enjeuxList = Object.values(enjeux_data[selectedPilier][selectedEsrs])
-    setEnjeux(enjeuxList);
-}, [selectedEsrs]);
+      // On s'assure que enjeux_data[selectedPilier] est un objet valide avant d'essayer d'obtenir ses valeurs.
+  if (enjeux_data[selectedPilier]) {
+    const esrsObject = enjeux_data[selectedPilier][selectedEsrs];
+    if (esrsObject) {
+      const enjeuxList = Object.values(esrsObject) as string[];
+      setEnjeux(enjeuxList);
+    } else {
+      // On gère le cas où esrsObject est undefined.
+      console.error('selectedEsrs non trouvé dans enjeux_data[selectedPilier]', selectedEsrs);
+      setEnjeux([]);
+    }
+  } else {
+    // on gère le cas où enjeux_data[selectedPilier] est undefined.
+    console.error('selectedPilier non trouvé dans enjeux_data', selectedPilier);
+    setEsrs([]);
+    setEnjeux([]);
+  }
+}, [selectedEsrs, selectedPilier]);
     
     const handleChangePilier = (event: ChangeEvent<HTMLSelectElement>) => {
         setSelectedPilier(event.target.value);
@@ -49,16 +64,34 @@ useEffect(() => {
   const { register, handleSubmit } = useForm<InputProps>()
   async function onSubmit (data: InputProps) {
 
+    let color = ''
+    if (data.pilier === 'Environnement') {
+        color = '#32a852'
+    } else if (data.pilier === 'Social') {
+        color = '#3073ba'
+    } else if (data.pilier === 'Gouvernance') {
+        color = '#d1963d'
+    }   
+
+    const enjeuCreated = {
+      label: data.label,
+      color,
+      pilier: data.pilier,
+      esrs: data.esrs,
+      business_impact: data.business_impact,
+      soc_en_impact: data.soc_en_impact,
+      authorId: session?.user?.id,
+    }
     // on envoie un post vers l'API
-    console.log(data);
+    console.log(enjeuCreated);
       const response = await fetch('/api/enjeu/createEnjeu', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(enjeuCreated),
       });
-
+      console.log(JSON.stringify(enjeuCreated));
       const newEnjeu = await response.json();
       console.log(newEnjeu);
   };
@@ -75,7 +108,7 @@ useEffect(() => {
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="name">
                   Pilier
                 </label>
-                <select {...register("pilier")} onChange={handleChangePilier} name="pilier" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
+                <select {...register("pilier", { maxLength: 200 })} onChange={handleChangePilier} name="pilier" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
                     {piliers.map((pilier, index) => (
                     <option key={index} value={pilier}>{pilier}</option>
                 ))}
@@ -88,7 +121,7 @@ useEffect(() => {
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="name">
                   ESRS
                 </label>
-                <select {...register("esrs")} onChange={handleChangeEsrs} name="esrs" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
+                <select {...register("esrs", { maxLength: 200 })} onChange={handleChangeEsrs} name="esrs" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
                         {esrs.map((esrs, index) => (
                             <option key={index} value={esrs}>{esrs}</option>
                         ))}
@@ -101,7 +134,7 @@ useEffect(() => {
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="email">
                   Enjeu
                 </label>
-                <select {...register("label")} name="enjeu" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
+                <select {...register("label", { maxLength: 200 })} name="label" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
                         {enjeux.map((enjeu, index) => (
                             <option key={index} value={enjeu}>{enjeu}</option>
                         ))}
@@ -114,7 +147,13 @@ useEffect(() => {
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="password">
                 Note d&apos;impact sur l&apos; activité de l&apos;entreprise
                 </label>
-                <input type="number" {...register("business_impact")} required name="password" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-[white] focus:border-[gray-500]" placeholder="Saisir une note de 0 à 10" />
+                <select {...register("business_impact")} name="Note d'impact sur l'entreprise" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-[white] focus:border-[gray-500]" placeholder="Sélectionner une note de 0 à 10">
+                          { 
+                            noteArray.map((note, index) => (
+                              <option key={index} value={note}>{note}</option>
+                            ))
+                          }
+                          </select>
               </div>
             </div>
             {/* Note d'impact sur l'environnement et le social */}
@@ -123,7 +162,13 @@ useEffect(() => {
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="passwordConfirm">
                 Note d&apos;impact sur l&apos;environnement et le social
                 </label>
-                <input type="number" {...register("soc_en_impact")} required name="Note d'impact sur l'entreprise" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-[white] focus:border-[gray-500]" placeholder="Saisir une note de 0 à 10" />
+                <select {...register("soc_en_impact")} name="Note d'impact sur l'entreprise" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-[white] focus:border-[gray-500]" placeholder="Sélectionner une note de 0 à 10" >
+                            { 
+                            noteArray.map((note, index) => (
+                              <option key={index} value={note}>{note}</option>
+                            ))
+                          }
+                          </select>
               </div>
             </div>
             {/* boutton soumission */}

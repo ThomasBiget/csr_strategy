@@ -35,11 +35,11 @@ const [enjeuxList, setEnjeuxList] = useState<string[]>([]);
   
   const { register, handleSubmit, watch, setValue} = useForm<InputProps>({
     defaultValues: {
-      pilier: 'Choisissez un pilier',
-      esrs: 'Choisissez un ESRS',
-      label: 'Choisissez un enjeu',
-      business_impact: 'Notez de 0 à 10',
-      soc_en_impact: 'Notez de 0 à 10'
+      pilier: '',
+      esrs: '',
+      label: '',
+      business_impact: '',
+      soc_en_impact: ''
     }
   })
 
@@ -123,9 +123,9 @@ const soc_en_impact = watch('soc_en_impact')
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="name">
                   Pilier
                 </label>
-                <select {...register("pilier", { maxLength: 200 })}  name="pilier" placeholder='Test' className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
-                    {pilier === 'Choisissez un pilier' &&
-                    <option value={pilier} disabled selected className='italic text-stone-400'>{pilier}</option>}
+                  <select {...register("pilier", { maxLength: 200 })} className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight"> 
+                    {pilier === '' &&
+                    <option value='' disabled hidden>Choisissez un pilier</option>}
                     {piliers.map((pilier, index) => (
                     <option key={index} value={pilier}>{pilier}</option>
                 ))}
@@ -133,70 +133,79 @@ const soc_en_impact = watch('soc_en_impact')
               </div>
             </div>
             {/* ESRS */}
+          {pilier !== '' &&
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="name">
                   ESRS
                 </label>
-                <select {...register("esrs", { maxLength: 200 })}  name="esrs" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
-                    {esrs === 'Choisissez un ESRS' &&
-                        <option value={esrs}>{esrs}</option>}
+                <select {...register("esrs", { maxLength: 200 })} className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
+                    {esrs === '' &&
+                        <option value='' disabled hidden>Choisissez un ESRS</option>}
                         {esrsList.map((esrs, index) => (
                         <option key={index} value={esrs}>{esrs}</option>
                         ))}
                 </select>
                 </div>
             </div>
+            }
             {/* Enjeu */}
+            { esrs !== '' &&
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="email">
                   Enjeu
                 </label>
                 <select {...register("label", { maxLength: 200 })} name="label" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
-                        {label === 'Choisissez un enjeu' &&
-                        <option value={label}>{label}</option>}
+                        {label === '' &&
+                        <option value='' disabled hidden>Choisissez un enjeu</option>}
                         {enjeuxList.map((enjeu, index) => (
                             <option key={index} value={enjeu}>{enjeu}</option>
                         ))}
                 </select>
               </div>
             </div>
+            }
             {/* Note d'impact sur l'activité de l'entreprise */}
+            { label !== '' &&
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 relative">
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="password">
                 Note d&apos;impact sur l&apos; activité de l&apos;entreprise
                 </label>
                 <select {...register("business_impact")} name="Note d'impact sur l'entreprise" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-[white] focus:border-[gray-500]" placeholder="Sélectionner une note de 0 à 10">
-                        {business_impact === 'Notez de 0 à 10' &&
-                        <option value={business_impact}>{business_impact}</option>}
+                        {business_impact === '' &&
+                        <option value='' disabled hidden>Notez de 0 à 10</option>}
                           { 
                             noteArray.map((note, index) => (
-                              <option key={index} value={note}>{note}</option>
+                              <option key={index} value={note} onClick={() => setValue("business_impact", note)}>{note}</option>
                             ))
                           }
                           </select>
               </div>
             </div>
+            }
             {/* Note d'impact sur l'environnement et le social */}
+            { business_impact !== '' &&
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 relative">
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="passwordConfirm">
                 Note d&apos;impact sur l&apos;environnement et le social
                 </label>
                 <select {...register("soc_en_impact")} name="Note d'impact sur l'entreprise" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-[white] focus:border-[gray-500]" placeholder="Sélectionner une note de 0 à 10" >
-                          {soc_en_impact === 'Notez de 0 à 10' &&
-                          <option value={soc_en_impact}>{soc_en_impact}</option>}
+                          {soc_en_impact === '' &&
+                          <option value='' disabled hidden>Notez de 0 à 10</option>}
                             { 
                             noteArray.map((note, index) => (
-                              <option key={index} value={note}>{note}</option>
+                              <option key={index} value={note} onClick={() => setValue("soc_en_impact", note)}>{note}</option>
                             ))
                           }
                           </select>
               </div>
             </div>
+            }
             {/* boutton soumission */}
+            { soc_en_impact !== '' &&
             <div className="md:flex md:items-center">
               <div className="md:w-1/3">
                 <button className="cursor-pointer transition-all 
@@ -209,6 +218,7 @@ const soc_en_impact = watch('soc_en_impact')
               </div>
               <div className="md:w-2/3" />
             </div>
+            }
           </form>
         </div>
         </div>

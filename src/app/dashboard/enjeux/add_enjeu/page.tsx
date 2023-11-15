@@ -22,48 +22,64 @@ const { data: session } = useSession()
 const piliers = Object.keys(enjeux_data);
 const esrsEnv = Object.keys(enjeux_data[piliers[0]]);
 
-const [selectedPilier, setSelectedPilier] = useState<string>(piliers[0]);
-const [esrs, setEsrs] = useState<string[]>([]);
-const [selectedEsrs, setSelectedEsrs] = useState<string>(esrsEnv[0]);
-const [enjeux, setEnjeux] = useState<string[]>([]);
+// const [selectedPilier, setSelectedPilier] = useState<string>(piliers[0]);
+const [esrsList, setEsrsList] = useState<string[]>([]);
+// const [selectedEsrs, setSelectedEsrs] = useState<string>(esrsEnv[0]);
+const [enjeuxList, setEnjeuxList] = useState<string[]>([]);
 
-useEffect(() => {
-  const esrsList = Object.keys(enjeux_data[selectedPilier]);
-    setEsrs(esrsList);
-    setSelectedEsrs(esrsList[0]);
-}, [selectedPilier, selectedEsrs]);
-
-useEffect(() => {
-      // On s'assure que enjeux_data[selectedPilier] est un objet valide avant d'essayer d'obtenir ses valeurs.
-  if (enjeux_data[selectedPilier]) {
-    const esrsObject = enjeux_data[selectedPilier][selectedEsrs];
-    if (esrsObject) {
-      const enjeuxList = Object.values(esrsObject) as string[];
-      setEnjeux(enjeuxList);
-    } else {
-      // On gère le cas où esrsObject est undefined.
-      console.error('selectedEsrs non trouvé dans enjeux_data[selectedPilier]', selectedEsrs);
-      setEnjeux([]);
-    }
-  } else {
-    // on gère le cas où enjeux_data[selectedPilier] est undefined.
-    console.error('selectedPilier non trouvé dans enjeux_data', selectedPilier);
-    setEsrs([]);
-    setEnjeux([]);
-  }
-}, [selectedEsrs, selectedPilier]);
-    
-    const handleChangePilier = (event: ChangeEvent<HTMLSelectElement>) => {
-        setSelectedPilier(event.target.value);
-    };
-
-    const handleChangeEsrs = (event: ChangeEvent<HTMLSelectElement>) => {
-        setSelectedEsrs(event.target.value);
-    };
+// useEffect(() => {
+//   const esrsList = Object.keys(enjeux_data[selectedPilier]);
+//     setEsrs(esrsList);
+//     setSelectedEsrs(esrsList[0]);
+// }, [selectedPilier]);
   
-  const { register, handleSubmit } = useForm<InputProps>()
-  async function onSubmit (data: InputProps) {
+  const { register, handleSubmit, watch, setValue} = useForm<InputProps>({
+    defaultValues: {
+      pilier: 'Choisissez un pilier',
+      esrs: 'Choisissez un ESRS',
+      label: 'Choisissez un enjeu',
+      business_impact: 'Notez de 0 à 10',
+      soc_en_impact: 'Notez de 0 à 10'
+    }
+  })
 
+  const pilier = watch('pilier')
+
+  useEffect(() => {
+    if (enjeux_data[pilier]) {
+    const list = Object.keys(enjeux_data[pilier])
+    setEsrsList(list)
+    }
+  }, [pilier])
+
+  const esrs = watch('esrs')
+  
+useEffect(() => {
+  // On s'assure que enjeux_data[selectedPilier] est un objet valide avant d'essayer d'obtenir ses valeurs.
+  if (enjeux_data[pilier]) {
+  const esrsObject = enjeux_data[pilier][esrs];
+  if (esrsObject) {
+    const list = Object.values(esrsObject) as string[];
+    setEnjeuxList(list);
+  } else {
+    // On gère le cas où esrsObject est undefined.
+    console.error('esrs non trouvé dans enjeux_data[pilier]', esrs);
+    setEnjeuxList([]);
+  }
+  } else {
+  // on gère le cas où enjeux_data[pilier] est undefined.
+  console.error('pilier non trouvé dans enjeux_data', pilier);
+  setEsrsList([]);
+  setEnjeuxList([]);
+  }
+}, [esrs, pilier]);
+
+const label = watch('label')
+const business_impact = watch('business_impact')
+const soc_en_impact = watch('soc_en_impact')
+
+  async function onSubmit (data: InputProps) {
+    console.log(data)
     let color = ''
     if (data.pilier === 'Environnement') {
         color = '#32a852'
@@ -96,7 +112,6 @@ useEffect(() => {
       console.log(newEnjeu);
   };
 
-
   return (
   <div>
         <div className="flex flex-col items-center justify-between mb-3 mt-6">
@@ -108,7 +123,9 @@ useEffect(() => {
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="name">
                   Pilier
                 </label>
-                <select {...register("pilier", { maxLength: 200 })} onChange={handleChangePilier} name="pilier" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
+                <select {...register("pilier", { maxLength: 200 })}  name="pilier" placeholder='Test' className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
+                    {pilier === 'Choisissez un pilier' &&
+                    <option value={pilier} disabled selected className='italic text-stone-400'>{pilier}</option>}
                     {piliers.map((pilier, index) => (
                     <option key={index} value={pilier}>{pilier}</option>
                 ))}
@@ -121,9 +138,11 @@ useEffect(() => {
                 <label className="block uppercase tracking-wide text-[gray-700] text-xs font-bold mb-2" htmlFor="name">
                   ESRS
                 </label>
-                <select {...register("esrs", { maxLength: 200 })} onChange={handleChangeEsrs} name="esrs" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
-                        {esrs.map((esrs, index) => (
-                            <option key={index} value={esrs}>{esrs}</option>
+                <select {...register("esrs", { maxLength: 200 })}  name="esrs" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
+                    {esrs === 'Choisissez un ESRS' &&
+                        <option value={esrs}>{esrs}</option>}
+                        {esrsList.map((esrs, index) => (
+                        <option key={index} value={esrs}>{esrs}</option>
                         ))}
                 </select>
                 </div>
@@ -135,7 +154,9 @@ useEffect(() => {
                   Enjeu
                 </label>
                 <select {...register("label", { maxLength: 200 })} name="label" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight">
-                        {enjeux.map((enjeu, index) => (
+                        {label === 'Choisissez un enjeu' &&
+                        <option value={label}>{label}</option>}
+                        {enjeuxList.map((enjeu, index) => (
                             <option key={index} value={enjeu}>{enjeu}</option>
                         ))}
                 </select>
@@ -148,6 +169,8 @@ useEffect(() => {
                 Note d&apos;impact sur l&apos; activité de l&apos;entreprise
                 </label>
                 <select {...register("business_impact")} name="Note d'impact sur l'entreprise" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-[white] focus:border-[gray-500]" placeholder="Sélectionner une note de 0 à 10">
+                        {business_impact === 'Notez de 0 à 10' &&
+                        <option value={business_impact}>{business_impact}</option>}
                           { 
                             noteArray.map((note, index) => (
                               <option key={index} value={note}>{note}</option>
@@ -163,6 +186,8 @@ useEffect(() => {
                 Note d&apos;impact sur l&apos;environnement et le social
                 </label>
                 <select {...register("soc_en_impact")} name="Note d'impact sur l'entreprise" className="appearance-none block w-full bg-[gray-200] text-[gray-700] border border-[gray-200] rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-[white] focus:border-[gray-500]" placeholder="Sélectionner une note de 0 à 10" >
+                          {soc_en_impact === 'Notez de 0 à 10' &&
+                          <option value={soc_en_impact}>{soc_en_impact}</option>}
                             { 
                             noteArray.map((note, index) => (
                               <option key={index} value={note}>{note}</option>

@@ -1,12 +1,54 @@
 import { Trash2, PenSquare, Plus } from 'lucide-react'
 import Link from 'next/link'
-import { useSession } from "next-auth/react"
+import { getAuthSession } from '@/lib/nextauth'
 import prisma from '../../../lib/client';
+import RemoveEnjeuButton from '@/components/removeEnjeuButton';
 
+
+interface UserProps {
+    user?: {
+      id?: string;
+      name?: string;
+      email?: string;
+      image?: string;
+    };
+  }
+
+interface EnjeuProps {
+    id: number;
+    label: string;
+    color: string;
+    pilier: string;
+    esrs: string;
+    business_impact: number;
+    soc_en_impact: number;
+    authorId: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
 
 export default async function Enjeux() {
-    // const { data: session } = useSession()
-    const enjeux = await prisma.enjeu.findMany();
+    const sessionResult = await getAuthSession();
+
+console.log(sessionResult);
+
+if (!sessionResult?.user) {
+  return (
+    <div>
+    <div>Vous n&apos;êtes pas connecté</div>
+    <Link href='/login'>Se connecter</Link>
+    </div>
+  )
+}
+else {
+  const session: UserProps = sessionResult as UserProps;
+  const userId = Number(session?.user?.id)
+
+    const enjeux = await prisma.enjeu.findMany({
+        where: {
+            authorId: userId
+        }
+    });
     console.log(enjeux)
   return (
     <div>
@@ -39,7 +81,7 @@ export default async function Enjeux() {
                 </tr>
             </thead>
             <tbody>
-                { enjeux.map((enjeu) => (
+                { enjeux.map((enjeu: EnjeuProps) => (
 
                 <tr key={enjeu.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -58,27 +100,14 @@ export default async function Enjeux() {
                         {enjeu.soc_en_impact}
                     </td>
                     <td scope="col" className="px-6 py-3 flex gap-2">
-                    <PenSquare /><Trash2 color="#ff0000" />
+                    <PenSquare /><RemoveEnjeuButton id={enjeu.id}/>
                     </td>
                 </tr>
                 ))}
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Parité homme / femme
-                    </th>
-                    <td className="px-6 py-4">
-                        Social
-                    </td>
-                    <td className="px-6 py-4">
-                        Liste des actions mises en place pour atteindre la parité homme / femme
-                    </td>
-                    <td scope="col" className="px-6 py-3 flex gap-2">
-                    <PenSquare /><Trash2 color="#ff0000" />
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
     </div>
   )
+}
 }

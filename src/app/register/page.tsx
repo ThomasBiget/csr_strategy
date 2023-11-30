@@ -2,6 +2,8 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
 
 
 // typage des éléments envoyés en post à l'API
@@ -14,7 +16,7 @@ interface InputProps {
 }
 
 function Register() {
-
+  const router = useRouter()
   // state qui va contenir tout le contenu des inputs au fur
   // et à mesure qu'ils se remplissent par le user, cela permettra de valider le format du password
   const [inputs, setInputs] = useState<InputProps>({ name: '', entreprise: '', email: '', password: '', passwordConfirm: '' });
@@ -75,6 +77,8 @@ function Register() {
 
       const newUser = await response.json();
       console.log(newUser);
+      router.refresh();
+      router.push('/connexion');
   };
 
 

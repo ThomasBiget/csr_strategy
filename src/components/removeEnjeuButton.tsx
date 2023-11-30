@@ -1,5 +1,6 @@
 "use client"
-import { Trash2 } from 'lucide-react'
+import { Trash2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -9,7 +10,7 @@ interface RemoveEnjeuButtonProps {
 
 
 export default function RemoveEnjeuButton({ id }: RemoveEnjeuButtonProps) {
-
+    const router = useRouter()
     const handleClick = async () => {
         console.log(id)
     try {
@@ -24,7 +25,7 @@ export default function RemoveEnjeuButton({ id }: RemoveEnjeuButtonProps) {
         if (!response.ok) {
           throw new Error('Problème lors de la suppression de l\'enjeu');
         }
-  
+        router.refresh();
         // Gérer la réponse (par exemple, rafraîchir les données affichées ou notifier l'utilisateur)
       } catch (error) {
         console.error(error);

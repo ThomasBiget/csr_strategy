@@ -2,6 +2,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSession } from "next-auth/react"
+import { useRouter } from 'next/navigation';
 
 
 // typage des éléments envoyés en post à l'API
@@ -17,6 +18,8 @@ const enjeux_data = require('../../../../../data/esrs.json');
 const noteArray = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "1"];
 
 export default function AddEnjeu() {
+
+const router = useRouter()
 
 const { data: session } = useSession()
 const piliers = Object.keys(enjeux_data);
@@ -110,6 +113,8 @@ const soc_en_impact = watch('soc_en_impact')
       console.log(JSON.stringify(enjeuCreated));
       const newEnjeu = await response.json();
       console.log(newEnjeu);
+      router.refresh();
+      router.push('/dashboard/enjeux');
   };
 
   return (

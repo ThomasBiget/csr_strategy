@@ -1,4 +1,4 @@
-import { Trash2, PenSquare, Plus } from 'lucide-react'
+import { Undo2, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { getAuthSession } from '@/lib/nextauth'
 import prisma from '../../../lib/client';
@@ -52,8 +52,10 @@ else {
     console.log(enjeux)
   return (
     <div>
-    <div className='flex justify-end mr-6 mb-4'>
+    <div className='flex justify-between mr-6 mb-4'>
+        <Link href={'/dashboard'}><button className='bg-gray-100 hover:bg-gray-200 text-gray-800 ml-4 text-sm font-bold py-2 px-4 inline-flex items-center rounded-full gap-1'><span>Retour</span><Undo2 size={16} /></button></Link>
         <Link href={'/dashboard/enjeux/add_enjeu'}><button className='bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold py-2 px-4 inline-flex items-center rounded-full gap-1'><Plus size={16} /><span>Ajouter un enjeu</span></button></Link>
+    
     </div>
     <div className='divide-y divide-solid'></div>
     <div className="relative overflow-x-auto">
@@ -76,7 +78,7 @@ else {
                         Note Environnement & Social impact
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Modifier / Supprimer
+                      Supprimer
                     </th>
                 </tr>
             </thead>
@@ -100,7 +102,7 @@ else {
                         {enjeu.soc_en_impact}
                     </td>
                     <td scope="col" className="px-6 py-3 flex gap-2">
-                    <PenSquare /><RemoveEnjeuButton id={enjeu.id}/>
+                    <RemoveEnjeuButton id={enjeu.id}/>
                     </td>
                 </tr>
                 ))}

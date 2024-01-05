@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { getAuthSession } from '@/lib/nextauth'
 import prisma from '../../../lib/client';
 import RemoveEnjeuButton from '@/components/removeEnjeuButton';
+import { array } from 'zod';
+
 
 
 interface UserProps {
@@ -27,7 +29,7 @@ interface EnjeuProps {
     updatedAt: Date;
 }
 
-export default async function Enjeux() {
+export default async function Projets() {
     const sessionResult = await getAuthSession();
 
 console.log(sessionResult);
@@ -44,6 +46,8 @@ else {
   const session: UserProps = sessionResult as UserProps;
   const userId = Number(session?.user?.id)
 
+
+  
     const enjeux = await prisma.enjeu.findMany({
         where: {
             authorId: userId
@@ -54,7 +58,6 @@ else {
     <div className='flex justify-between mr-6 mb-4'>
         <Link href={'/dashboard'}><button className='bg-gray-100 hover:bg-gray-200 text-gray-800 ml-4 text-sm font-bold py-2 px-4 inline-flex items-center rounded-full gap-1'><span>Retour</span><Undo2 size={16} /></button></Link>
         <Link href={'/dashboard/enjeux/add_enjeu'}><button className='bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold py-2 px-4 inline-flex items-center rounded-full gap-1'><Plus size={16} /><span>Ajouter un enjeu</span></button></Link>
-    
     </div>
     <div className='divide-y divide-solid'></div>
     <div className="relative overflow-x-auto">

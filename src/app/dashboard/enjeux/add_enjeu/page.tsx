@@ -1,9 +1,8 @@
 "use client"
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation';
-
 
 // typage des éléments envoyés en post à l'API
 interface InputProps {
@@ -25,16 +24,10 @@ const { data: session } = useSession()
 const piliers = Object.keys(enjeux_data);
 const esrsEnv = Object.keys(enjeux_data[piliers[0]]);
 
-// const [selectedPilier, setSelectedPilier] = useState<string>(piliers[0]);
-const [esrsList, setEsrsList] = useState<string[]>([]);
-// const [selectedEsrs, setSelectedEsrs] = useState<string>(esrsEnv[0]);
-const [enjeuxList, setEnjeuxList] = useState<string[]>([]);
 
-// useEffect(() => {
-//   const esrsList = Object.keys(enjeux_data[selectedPilier]);
-//     setEsrs(esrsList);
-//     setSelectedEsrs(esrsList[0]);
-// }, [selectedPilier]);
+const [esrsList, setEsrsList] = useState<string[]>([]);
+
+const [enjeuxList, setEnjeuxList] = useState<string[]>([]);
   
   const { register, handleSubmit, watch, setValue} = useForm<InputProps>({
     defaultValues: {
